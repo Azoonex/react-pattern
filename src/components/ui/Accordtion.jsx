@@ -13,18 +13,13 @@ const useAccordtionContext = () => {
 function Root({ className, children }) {
   const [openItemId, setOpenItemId] = useState(null);
 
-  function openItem(id) {
-    setOpenItemId(id);
-  }
-
-  function closeItem() {
-    setOpenItemId(null);
+  function toggleItem(id) {
+    setOpenItemId((prev) => (prev === id ? null : id));
   }
 
   const valueContextAccordtion = {
     openItemId,
-    openItem,
-    closeItem,
+    toggleItem,
   };
 
   return (
@@ -34,33 +29,22 @@ function Root({ className, children }) {
   );
 }
 
-Root.displayName = "AccodtionRoot";
 
 function Item({ id, title, children }) {
-  const { openItemId, openItem, closeItem } = useAccordtionContext();
+  const { toggleItem, openItemId } = useAccordtionContext();
 
   const isOpen = id === openItemId;
 
-  function handleCLick() {
-    console.log(openItemId)
-    if (isOpen) {
-      closeItem();
-    } else {
-      openItem(id);
-    }
-  }
-
   return (
-    <li style={{cursor : "pointer"}} onClick={handleCLick}>
+    <li style={{ cursor: "pointer" }} onClick={() => toggleItem(id)}>
       <h2>{title}</h2>
       <div>{isOpen ? children : undefined}</div>
     </li>
   );
 }
 
+Root.displayName = "AccodtionRoot";
 Item.displayName = "AccodtionItem";
+Root.Item = Item
 
-export default {
-  Root,
-  Item,
-};
+export default Root;
