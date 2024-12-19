@@ -1,0 +1,181 @@
+https://css-tricks.com/sass-techniques-from-the-trenches/
+
+.MyComponent {
+  $block: '.MyComponent';
+  
+  &-title {
+    #{$block}--xmasTheme & {
+    }
+  }
+  
+  &-content {
+    #{$block}--xmasTheme & {
+    }
+  }
+}
+
+//nested
+
+.MyComponent {
+  &-title {
+    .MyComponent--xmasTheme & {
+    }
+  }
+  
+  &-content {
+    .MyComponent--xmasTheme & {
+    }
+  }
+}
+
+/////
+.Component1 {
+  &-title {}
+  &-content {}
+  &-author {}
+}
+
+.Component2 {
+  &-title {}
+  &-content {}
+  &-author {}
+}
+
+.Component3 {
+  &-title {}
+  &-content {}
+  &-author {}
+}
+
+.Component4 {
+  &-title {}
+  &-content {}
+  &-author {}
+}
+
+.Component5 {
+  &-title {}
+  &-content {}
+  &-author {}
+}
+
+// A couple of hundred lines later...
+
+.Component7384 {
+  &-title {}
+  &-content {}
+  &-author {}
+}
+
+/////
+
+// pattern mixin ( 1 ) 
+
+@mixin text($size, $lineHeight, $weight) {
+  font-size: $size;
+  line-height: $lineHeight;
+  font-weight: $weight;
+}
+
+.MyComponent {
+  @include text(18px, 27px, 500);
+}
+
+////
+
+// pattern mixin ( 2 )
+
+@mixin text($size, $lineHeight, $weight) {
+  // If the $size argument is not empty, then output the argument
+  @if $size != null {
+    font-size: $size;
+  }
+  
+  // If the $lineHeight argument is not empty, then output the argument
+  @if $lineHeight != null {
+    line-height: $lineHeight;
+  }
+  
+  // If the $weight argument is not empty, then output the argument
+  @if $weight != null {
+    font-weight: $weight;
+  }
+}
+
+.MyComponent {
+  @include text(12px, null, 300);
+}
+
+// pattern mixin  ( 3 )
+
+
+@mixin text($size: null, $lineHeight: null, $weight: null) {
+  @if $size != null {
+    font-size: $size;
+  }
+  
+  @if $lineHeight != null {
+    line-height: $lineHeight;
+  }
+  
+  @if $weight != null {
+    font-weight: $weight;
+  }
+}
+
+
+.MyComponent {
+  &-title {
+    @include text(16px, 19px, 600);
+  }
+  
+  &-author {
+    @include text($weight: 800, $size: 12px);
+  }
+}
+
+
+
+// function ( 1 )
+
+@function scut-rem ($pixels) {
+  @return scut-strip-unit($pixels) / $scut-rem-base * 1rem;
+}
+
+.MyComponent {
+  font-size: scut-rem(18px);  
+}
+
+
+// those placeholders
+
+%flex-y {
+  display: flex;
+}
+
+%item {
+  display: block;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.MyComponent {
+  @extend %item;
+  color: blue;
+}
+
+
+// extinde
+
+.button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.primary-button {
+  @extend .button;
+}
+
