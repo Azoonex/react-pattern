@@ -29,12 +29,13 @@ function App() {
             item: "hello coding javascirpt !",
           },
         ]}
+        itemKeyFun={(i)=> i.id}
       >
         {(item) => <span>
           {item.item}
           </span>}
       </Searchbeal>
-      <Searchbeal items={["item 1", "item 2"]}>{(item) => item}</Searchbeal>
+      <Searchbeal  itemKeyFun={(i)=> i} items={["item 1", "item 2"]}>{(item) => item}</Searchbeal>
     </main>
   );
 }
