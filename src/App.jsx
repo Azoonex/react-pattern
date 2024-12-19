@@ -1,4 +1,5 @@
 import Accordtion from "./components/ui/Accordtion";
+import Searchbeal from "./components/ui/Searchbeal";
 
 function App() {
   return (
@@ -19,6 +20,21 @@ function App() {
           </Accordtion.Content>
         </Accordtion.Item>
       </Accordtion.Root>
+
+      <Searchbeal
+        items={[
+          { id: 1, item: "hello world" },
+          {
+            id: 1,
+            item: "hello coding javascirpt !",
+          },
+        ]}
+      >
+        {(item) => <span>
+          {item.item}
+          </span>}
+      </Searchbeal>
+      <Searchbeal items={["item 1", "item 2"]}>{(item) => item}</Searchbeal>
     </main>
   );
 }
