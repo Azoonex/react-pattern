@@ -4,16 +4,18 @@ export default function Searchbeal({ items, itemKeyFun, children }) {
   const lastChange = useRef();
   const [valueSearChInput, setValueSearchInput] = useState("");
 
-  const sortItem = useCallback(() => {
+  const sortItem = () => {
     if (lastChange.current) {
       clearTimeout(lastChange.current);
     }
+      lastChange.current = null;
+      return items.filter((i) =>
+        JSON.stringify(i).toLowerCase().includes(valueSearChInput.toLowerCase())
+      );
+  };
 
-    lastChange.current = null;
-    return items.filter((i) =>
-      JSON.stringify(i).toLowerCase().includes(valueSearChInput.toLowerCase())
-    );
-  }, [valueSearChInput]);
+  
+
 
   return (
     <ul>
@@ -24,7 +26,7 @@ export default function Searchbeal({ items, itemKeyFun, children }) {
           setValueSearchInput(event.target.value);
         }}
       />
-      {
+      {sortItem.length > 0 &&
         sortItem().map((item) => (
           <li key={itemKeyFun(item)}>{children(item)}</li>
         ))}
