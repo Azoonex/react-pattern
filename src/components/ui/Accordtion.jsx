@@ -29,6 +29,17 @@ function Root({ className, children }) {
   );
 }
 
+function Content({ children, className }) {
+  return <article className={className}>{children}</article>
+}
+
+function Title({ children, className, ...props }) {
+  return (
+    <h4 className={className} {...props}>
+      {children}
+    </h4>
+  );
+}
 
 function Item({ id, title, children }) {
   const { toggleItem, openItemId } = useAccordtionContext();
@@ -45,6 +56,11 @@ function Item({ id, title, children }) {
 
 Root.displayName = "AccodtionRoot";
 Item.displayName = "AccodtionItem";
-Root.Item = Item
+Content.displayName = "AccodtionContent";
+Title.displayName = "AccodtionTitle";
 
-export default Root;
+Root.Item = Item;
+Root.Title = Title;
+Root.Content= Content;
+
+export default Root.Root = Root;
